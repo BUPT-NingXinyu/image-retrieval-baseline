@@ -35,39 +35,23 @@ def build_transform(resolution):
 if __name__ == "__main__":
     args = parse_args()
     transform = build_transform(args.image_resolution)
-<<<<<<< HEAD
-    train_path = os.path.join(args.data_dir, "train_imgs.tsv")
-    val_path = os.path.join(args.data_dir, "valid_imgs.tsv")
-    test_path = os.path.join(args.data_dir, "test_imgs.tsv")
-=======
     train_path = os.path.join(args.data_dir, "MR_train_imgs.tsv")
     val_path = os.path.join(args.data_dir, "MR_valid_imgs.tsv")
     test_path = os.path.join(args.data_dir, "MR_test_imgs.tsv")
->>>>>>> by Hextech Team
-    for path, split in zip((train_path, val_path, test_path), ("train", "valid", "test")):
+    #for path, split in zip((train_path, val_path, test_path), ("train", "valid", "test")):
+    for path, split in zip((val_path, test_path), ("valid", "test")):
         assert os.path.exists(path), "the {} filepath {} not exists!".format(split, path)
+        if not os.path.exists('/data/nxy/Multimodal_Retrieval/'+split):
+            os.makedirs('/data/nxy/Multimodal_Retrieval/'+split)
         print("begin to transform {} split".format(split))
-        image_dict = {}
+        num = 0
         with open(path, "r") as fin:
-<<<<<<< HEAD
             for line in tqdm(fin):
                 img_id, b64 = line.strip().split("\t")
                 image = Image.open(BytesIO(base64.urlsafe_b64decode(b64)))
                 image_array = transform(image).numpy()
-                image_dict[img_id] = image_array
-=======
-            num = 0
-            for line in tqdm(fin):
-                if num<12000:
-                    img_id, b64 = line.strip().split("\t")
-                    image = Image.open(BytesIO(base64.urlsafe_b64decode(b64)))
-                    image_array = transform(image).numpy()
-                    image_dict[img_id] = image_array
-                    num += 1
-                else:
-                    break
->>>>>>> by Hextech Team
-        output_path = "{}.{}.npz".format(path[:-4], args.image_resolution)
-        np.savez(output_path, **image_dict)
-        print("finished transforming {} images for {} split, the output is saved at {}".format(len(image_dict), split, output_path))
+                output_path = "/data/nxy/Multimodal_Retrieval/{}/{}.npy".format(split, img_id)
+                np.save(output_path, image_array)
+                num += 1
+        print("finished transforming {} images for {} split, the output is saved at {}".format(num, split, '/data/nxy/Multimodal_Retrieval/'+split))
     print("done!")

@@ -12,21 +12,16 @@ import torch.multiprocessing as mp
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
-<<<<<<< HEAD
-from clip.clip import load
-from clip.model import convert_weights, CLIP
-=======
 import sys
 sys.path.append('/home/nxy/tianchi/image-retrieval-baseline/src/')
 from clip.clip import load
 from clip.model import convert_weights, CLIP
 
->>>>>>> by Hextech Team
-from training.train import train, evaluate
-from training.data import get_data
-from training.params import parse_args
-from training.logger import setup_primary_logging, setup_worker_logging
-from training.scheduler import cosine_lr
+from train import train, evaluate
+from data import get_data
+from params import parse_args
+from logger import setup_primary_logging, setup_worker_logging
+from scheduler import cosine_lr
 
 # Used by https://github.com/openai/CLIP/issues/83 but not below.
 # Keeping it incase needed.

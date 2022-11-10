@@ -12,6 +12,11 @@ import json
 import torch
 from tqdm import tqdm
 
+<<<<<<< HEAD
+=======
+import sys
+sys.path.append('/home/nxy/tianchi/image-retrieval-baseline/src/')
+>>>>>>> by Hextech Team
 from clip.model import convert_weights, CLIP
 from training.main import convert_models_to_fp32
 from eval.data import get_eval_img_dataset, get_eval_txt_dataset
