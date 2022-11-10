@@ -12,14 +12,14 @@ import json
 import torch
 from tqdm import tqdm
 
-<<<<<<< HEAD
-=======
+
 import sys
 sys.path.append('/home/nxy/tianchi/image-retrieval-baseline/src/')
->>>>>>> by Hextech Team
+
 from clip.model import convert_weights, CLIP
 from training.main import convert_models_to_fp32
-from eval.data import get_eval_img_dataset, get_eval_txt_dataset
+#from eval.data import get_eval_img_dataset, get_eval_txt_dataset
+from eval.data import get_eval_npy_img_dataset, get_eval_txt_dataset
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     # Get data.
     if args.extract_image_feats:
         print("Preparing image inference dataset.")
-        img_data = get_eval_img_dataset(args)
+        img_data = get_eval_npy_img_dataset(args)
     if args.extract_text_feats:
         print("Preparing text inference dataset.")
         text_data = get_eval_txt_dataset(args, max_txt_length=model_info['context_length'])

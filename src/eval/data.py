@@ -58,6 +58,31 @@ class EvalImgDataset(Dataset):
         img_id = int(self.img_ids[idx])
         image = self._read_img_tensor_from_npzfile(img_id)
         return img_id, image
+    
+class EvalNpyImgDataset(Dataset):
+    def __init__(self, img_filepath):
+        assert os.path.exists(img_filepath), "The image npy datafile {} not exists!".format(img_filepath)
+        
+        logging.debug(f'Loading image npyfile from {img_filepath}.')
+        #self.imgs = np.load(img_filename, "r")
+        #self.img_ids = list(self.imgs.keys())
+        #logging.debug(f'Finished loading image npzfile from {img_filename}.')
+        
+        self.img_npy_path = img_filepath
+        for root, dirs, files in os.walk(img_filepath):
+            self.img_ids = files
+
+    def _read_img_tensor_from_npzfile(self, img_id):
+        img_array = self.imgs[str(img_id)]
+        return torch.from_numpy(img_array)
+
+    def __len__(self):
+        return len(self.img_ids)
+
+    def __getitem__(self, idx):
+        img_id = int(self.img_ids[idx].split('.')[0])
+        image = np.load(self.img_npy_path + str(img_id) + '.npy')
+        return img_id, image
 
 def get_eval_txt_dataset(args, max_txt_length=24):
     input_filename = args.text_data
@@ -84,6 +109,26 @@ def get_eval_img_dataset(args):
     img_filename = args.image_data
     dataset = EvalImgDataset(
         img_filename)
+    num_samples = len(dataset)
+    sampler = SequentialSampler(dataset)
+
+    dataloader = DataLoader(
+        dataset,
+        batch_size=args.img_batch_size,
+        num_workers=0,
+        pin_memory=True,
+        sampler=sampler,
+        drop_last=False,
+    )
+    dataloader.num_samples = num_samples
+    dataloader.num_batches = len(dataloader)
+
+    return DataInfo(dataloader, sampler)
+
+def get_eval_npy_img_dataset(args):
+    img_filepath = args.image_data
+    dataset = EvalNpyImgDataset(
+        img_filepath)
     num_samples = len(dataset)
     sampler = SequentialSampler(dataset)
 

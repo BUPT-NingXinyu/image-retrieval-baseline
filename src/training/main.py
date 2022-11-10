@@ -12,16 +12,16 @@ import torch.multiprocessing as mp
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
-<<<<<<< HEAD
+
 from clip.clip import load
 from clip.model import convert_weights, CLIP
-=======
+
 import sys
 sys.path.append('/home/nxy/tianchi/image-retrieval-baseline/src/')
 from clip.clip import load
 from clip.model import convert_weights, CLIP
 
->>>>>>> by Hextech Team
+
 from training.train import train, evaluate
 from training.data import get_data
 from training.params import parse_args

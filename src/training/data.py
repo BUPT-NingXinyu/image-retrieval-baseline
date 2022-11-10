@@ -51,9 +51,6 @@ class JsonlDataset(Dataset):
         text = tokenize([str(query)], context_length=self.max_txt_length)[0]
         eos_index = text.numpy().tolist().index(_tokenizer.vocab['[SEP]'])
         return image, text, eos_index
-<<<<<<< HEAD
-
-=======
     
 class NpyDataset(Dataset):
     def __init__(self, jsonl_filename, img_npy_path, split="val", max_txt_length=24):
@@ -91,7 +88,6 @@ class NpyDataset(Dataset):
         text = tokenize([str(query)], context_length=self.max_txt_length)[0]
         eos_index = text.numpy().tolist().index(_tokenizer.vocab['[SEP]'])
         return image, text, eos_index
->>>>>>> by Hextech Team
 
 @dataclass
 class DataInfo:
@@ -102,11 +98,7 @@ class DataInfo:
 def get_dataset(args, is_train, max_txt_length=24):
     input_filename = args.train_data if is_train else args.val_data
     img_filename = args.train_img if is_train else args.val_img
-<<<<<<< HEAD
-    dataset = JsonlDataset(
-        input_filename,
-        img_filename,
-=======
+
     img_npy_path = args.train_img if is_train else args.val_img
     # dataset = JsonlDataset(
     #     input_filename,
@@ -116,7 +108,6 @@ def get_dataset(args, is_train, max_txt_length=24):
     dataset = NpyDataset(
         input_filename,
         img_npy_path,
->>>>>>> by Hextech Team
         split="train" if is_train else "val",
         max_txt_length=max_txt_length)
     num_samples = len(dataset)
