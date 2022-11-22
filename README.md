@@ -29,3 +29,11 @@
 ### 结果
 
 与[image-retrieval-baseline](https://github.com/MUGE-2021/image-retrieval-baseline)中提到的 **mean-recall of around 50** 对齐。
+
+## cn_clip.ipynb
+
+基于[Chinese-CLIP](https://github.com/OFA-Sys/Chinese-CLIP)进行训练
+
+### baseline结果
+
+使用 CN-CLIP ViT-B/16 预训练模型直接预测。结果为 70.8633 分
