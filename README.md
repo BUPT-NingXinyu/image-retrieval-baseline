@@ -37,3 +37,108 @@
 ### baseline结果
 
 使用 CN-CLIP ViT-B/16 预训练模型直接预测。结果为 70.8633 分
+
+### fine-tune
+
+
+#### test-1
+
+```
+warmup=100
+batch_size=64
+valid_batch_size=64
+lr=5e-5
+wd=0.001
+max_epochs=3
+valid_step_interval=150
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+最后一轮模型提交结果64.3419
+
+#### test-2
+
+```
+warmup=100
+batch_size=16
+valid_batch_size=16
+lr=1e-5
+wd=0.001
+max_epochs=3
+valid_step_interval=10000
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+冻结bert模型。最后一轮提交得分为68.8849。第一轮得分为63.1303。
+
+#### test-2
+
+```
+warmup=100
+batch_size=16
+valid_batch_size=16
+lr=1e-5
+wd=0.001
+max_epochs=3
+valid_step_interval=10000
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+同时冻结bert模型和vision模型。最后一轮提交得分为72.6619。
+
+#### test-3
+
+```
+warmup=100
+batch_size=16
+valid_batch_size=16
+lr=1e-5
+wd=0.001
+max_epochs=3
+valid_step_interval=10000
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+冻结vision模型。最后一轮提交得分为73.2148。
+
+#### test-4
+
+```
+warmup=100
+batch_size=32
+valid_batch_size=32
+lr=1e-5
+wd=0.001
+max_epochs=6
+valid_step_interval=10000
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+冻结vision模型。最后一轮提交得分为74.0741。
+
+#### test-5
+
+```
+warmup=100
+batch_size=32
+valid_batch_size=32
+lr=1e-5
+wd=0.001
+max_epochs=19
+valid_step_interval=10000
+valid_epoch_interval=1
+vision_model=ViT-B-16
+text_model=RoBERTa-wwm-ext-base-chinese
+```
+
+冻结vision模型。最后一轮提交得分为72.0624。
